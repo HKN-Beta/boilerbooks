@@ -1,104 +1,84 @@
 <template>
   <div class="container-lg my-5 pt-5">
-    <h1>Boiler Books Settings</h1>
+    <h1>Boiler Books Account Details</h1>
 
     <div v-if="dispmsg!==''" class="lead fw-bold my-1 fs-3" v-bind:class="{'text-success':!error,'text-danger':error}">{{dispmsg}}</div>
     <br v-else>
 
-    <div class="my-4">
-      <h2>Account Details</h2>
-      <div class="row my-2">
-        <div class="label-responsive col-md-4">
-          <h4>Account Username</h4>
-        </div>
-        <div class="col-md-8">
-          <input class="form-control" v-model="uname" v-bind:disabled="useOIDC">
-        </div>
+    <div class="row my-2">
+      <div class="label-responsive col-md-4">
+        <h4>Account Username</h4>
       </div>
-
-      <div class="row my-2">
-        <div class="label-responsive col-md-4">
-          <h4>Current First Name</h4>
-        </div>
-        <div class="col-md-8">
-          <input class="form-control" v-model="fname" v-bind:disabled="useOIDC">
-        </div>
-      </div>
-
-      <div class="row my-2">
-        <div class="label-responsive col-md-4">
-          <h4>Current Last Name</h4>
-        </div>
-        <div class="col-md-8">
-          <input class="form-control" v-model="lname" v-bind:disabled="useOIDC">
-        </div>
-      </div>
-
-      <div class="row my-2">
-        <div class="label-responsive col-md-4">
-          <h4>Current Email</h4>
-        </div>
-        <div class="col-md-8">
-          <input class="form-control" v-model="email" v-bind:disabled="useOIDC">
-        </div>
-      </div>
-
-      <div class="row my-2">
-        <div class="label-responsive col-md-4">
-          <h4>Current Address</h4>
-        </div>
-        <div class="col-md-8">
-          <input class="form-control" v-model="address">
-        </div>
-      </div>
-
-      <div class="row my-2">
-        <div class="label-responsive col-md-4">
-          <h4>Current City</h4>
-        </div>
-        <div class="col-md-8">
-          <input class="form-control" v-model="city">
-        </div>
-      </div>
-
-      <div class="row my-2">
-        <div class="label-responsive col-md-4">
-          <h4>Current State</h4>
-        </div>
-        <div class="col-md-8">
-          <input class="form-control" v-model="state">
-        </div>
-      </div>
-
-      <div class="row my-2">
-        <div class="label-responsive col-md-4">
-          <h4>Current Zip Code</h4>
-        </div>
-        <div class="col-md-8">
-          <input class="form-control" v-model="zip">
-        </div>
-      </div>
-
-      <button class="btn btn-primary mt-2 mx-1" v-on:click="updateAccount">Update Account Details</button>
-      <button class="btn btn-secondary mt-2 mx-1" v-on:click="changePassword">Change Password</button>
-    </div>
-
-    <div class="my-4">
-      <h2>Color Theme</h2>
-      <p class="lead">Experimental! Stored only in your current browser! Report any issues.</p>
-      <div class="row">
-        <div class="col-md-2 offset-md-4">
-          <p>Current Theme:</p>
-        </div>
-        <div class="col-md-3">
-          <select id="theme-select" class="form-select" v-model="bb_bs_theme" required>
-            <option selected disabled value="auto"> auto: follow system preference</option>
-            <option selected value="light">light: classic boiler books theme</option>
-            <option selected value="dark"> dark: new dark mode theme</option>
-          </select>
-        </div>
+      <div class="col-md-8">
+        <input class="form-control" v-model="uname" v-bind:disabled="login_type.type === 'oidc'">
       </div>
     </div>
+
+    <div class="row my-2">
+      <div class="label-responsive col-md-4">
+        <h4>Current First Name</h4>
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" v-model="fname" v-bind:disabled="login_type.type === 'oidc'">
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div class="label-responsive col-md-4">
+        <h4>Current Last Name</h4>
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" v-model="lname" v-bind:disabled="login_type.type === 'oidc'">
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div class="label-responsive col-md-4">
+        <h4>Current Email</h4>
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" v-model="email" v-bind:disabled="login_type.type === 'oidc'">
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div class="label-responsive col-md-4">
+        <h4>Current Address</h4>
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" v-model="address">
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div class="label-responsive col-md-4">
+        <h4>Current City</h4>
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" v-model="city">
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div class="label-responsive col-md-4">
+        <h4>Current State</h4>
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" v-model="state">
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div class="label-responsive col-md-4">
+        <h4>Current Zip Code</h4>
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" v-model="zip">
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-2 mx-1" v-on:click="updateAccount">Update Account Details</button>
+    <button class="btn btn-secondary mt-2 mx-1" v-on:click="changePassword">Change Password</button>
 
   </div>
 </template>
@@ -137,8 +117,7 @@ export default {
       zip: '',
       dispmsg:'',
       error:false,
-      useOIDC: import.meta.env.VITE_USE_OIDC === "true",
-      bb_bs_theme: "light"
+      login_type: {type: ''},
     }
   },
   methods: {
@@ -166,20 +145,15 @@ export default {
       }
     },
     changePassword() {
-      if (this.useOIDC) {
-        window.location.href = import.meta.env.VITE_OIDC_ACCOUNT;
+      if (this.login_type.type === 'oidc') {
+        window.location.href = this.login_type.oidc_profile;
       } else {
         this.$router.push('/myaccount/password');
       }
     }
   },
   async mounted() {
-    const theme = localStorage.getItem("bb_bs_theme");
-    if (theme !== null)
-    {
-      this.bb_bs_theme = theme;
-    }
-
+    // Get account details
     const response = await fetchWrapperJSON(`/api/v2/account/${auth_state.state.uname}`, {
       method: 'get',
     });
@@ -197,12 +171,19 @@ export default {
     this.city = response.response.city;
     this.state = response.response.state;
     this.zip = response.response.zip;
-  },
-  watch: {
-    bb_bs_theme(new_val) {
-      localStorage.setItem("bb_bs_theme", new_val); // First save the theme for later
-      document.documentElement.setAttribute('data-bs-theme', new_val); // Swap the theme
+
+    // Get API login details
+    const other_response = await fetchWrapperJSON('/api/v2/ui/login', {
+      'method': 'get',
+    });
+
+    if (other_response.error) {
+      this.error = true;
+      this.errmsg = other_response.response;
+      return;
     }
+
+    this.login_type = other_response.response
   }
 }
 </script>
